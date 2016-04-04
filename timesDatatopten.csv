@@ -1,0 +1,11 @@
+world_rank,university_name,country,teaching,international,research,citations,income,num_students,student_staff_ratio,international_students,total_score
+1,California Institute of Technology,United States of America,95.6,64,97.6,99.8,97.8,2243,6.9,0.27,95.2
+2,University of Oxford,United Kingdom,86.5,94.4,98.9,98.8,73.1,19919,11.6,0.34,94.2
+3,Stanford University,United States of America,92.5,76.3,96.2,99.9,63.3,15596,7.8,0.22,93.9
+4,University of Cambridge,United Kingdom,88.2,91.5,96.7,97,55,18812,11.8,0.34,92.8
+5,Massachusetts Institute of Technology,United States of America,89.4,84,88.6,99.7,95.4,11074,9,0.33,92
+6,Harvard University,United States of America,83.6,77.2,99,99.8,45.2,20152,8.9,0.25,91.6
+7,Princeton University,United States of America,85.1,78.5,91.9,99.3,52.1,7929,8.4,0.27,90.1
+8,Imperial College London,United Kingdom,83.3,96,88.5,96.7,53.7,15060,11.7,0.51,89.1
+9,ETH Zurich – Swiss Federal Institute of Technology Zurich,Switzerland,77,97.9,95,91.1,80,18178,14.7,0.37,88.3
+10,University of Chicago,United States of America,85.7,65,88.9,99.2,36.6,14221,6.9,0.21,87.9
