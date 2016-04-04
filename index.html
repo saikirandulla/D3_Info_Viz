@@ -8,7 +8,8 @@
     background: #383A3F;
   }
   svg {
-    font: 10px sans-serif;
+    font: 14px sans-serif;
+    fill: #FFFFF3;
   }
 
   .background path {
@@ -35,7 +36,6 @@
     
     shape-rendering: crispEdges;
     fill: #FFFFF3;
-    font-size: 14;
     cursor: move;
   }
 
@@ -45,9 +45,10 @@
 <body>
   <script>
 
-  var margin = {top: 30, right: 10, bottom: 10, left: 10},
-      width = 1200 - margin.left - margin.right,
-      height = 500 - margin.top - margin.bottom;
+  var w = 1200, h = 500;
+  var margin = {top: 30, right: 100, bottom: 10, left: 10},
+      width = w - margin.left - margin.right,
+      height = h - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal().rangePoints([0, width], 1),
       y = {},
@@ -65,8 +66,8 @@
             } 
 
   var svg = d3.select("body").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .attr("width", w)
+      .attr("height", h)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -97,17 +98,14 @@
 
     // Add foreground lines for focus.
     foreground = svg.append("g")
-       
       .selectAll("path")
-        .data(rankings)
-
+      .data(rankings)
       .enter().append("path")
-        .attr("d", path).attr("stroke",function (d) {
-          return color_hash[d.Country];
-        })
-
-        .attr("fill","none")
-        ;
+      .attr("d", path).attr("stroke",function (d) {
+        return color_hash[d.Country];
+      })
+      .attr("fill","none")
+      .attr("opacity", 0.85);
 
     // Add a group element for each dimension.
     var g = svg.selectAll(".dimension")
@@ -158,40 +156,63 @@
       .selectAll("rect")
         .attr("x", -8)
         .attr("width", 16);
+  
   });
+
+
 
   // add legend   
   var legend = svg.append("g")
     .attr("class", "legend")
-        //.attr("x", w - 65)
-        //.attr("y", 50)
-    .attr("height", 100)
+    .attr("height", 200)
     .attr("width", 100)
-    .attr('transform', 'translate(-20,50)');  
-      
+    .attr("transform", "translate("+(w-150)+",50)")
+    .style("font-size","12px");
     
+  svg.selectAll("text")
+    .data(["Click legend to", "hide/show countries:"])
+    .enter()
+    .append("text")
+    .attr("x",w-150)
+    .attr("y",function(d, i){return i * 20 + 50;})
+    .text(function (d) {return d;})
+    .style("font-size","12px");
+
+    var countries = ["USA", "United Kingdom", "Switzerland", "Canada"];
+    var hide = [false, false, false, false];
     legend.selectAll('rect')
-      .data(color_hash)
+      .data(countries)
       .enter()
       .append("rect")
-    .attr("x", width-65)
-      .attr("y", function(d, i){ return i *  20;})
-    .attr("width", 10)
-    .attr("height", 10)
-    .style("fill", function(d) { 
-        var color = d;
-        return color;
+      .attr("x", 0)
+      .attr("y", function(d, i){ return i *  25 + 35;})
+      .attr("width", 15)
+      .attr("height", 15)
+      .attr("fill", function(d) { 
+        return color_hash[d];
+      })
+      .on("click", function(d, i) {
+        
+        hide[i] = !hide[i];
+        if (hide[i]) {
+          d3.select(this)
+            .style("opacity", 0.2);
+          foreground.attr("opacity", 0.1);
+        }
+        else {
+          d3.select(this).style("opacity", 1);
+          foreground.attr("opacity", 1);
+        }
       });
-      
-    legend.selectAll('text')
-      .data(color_hash)
+
+    legend.selectAll("text")
+      .data(countries)
       .enter()
       .append("text")
-    .attr("x", width - 52)
-      .attr("y", function(d, i){ return i *  20 + 9;})
-    .text(function(d,i) {
-        var text = d[i];
-        return text;
+      .attr("x", 25)
+      .attr("y", function(d, i) { return i *  25 + 48;})
+      .text(function(d) {
+        return d;
       });
 
   function position(d) {
