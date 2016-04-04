@@ -2,13 +2,21 @@
 <meta charset="utf-8">
 <head>
   <title>Parallel Coordinates</title>
+  <link href='https://fonts.googleapis.com/css?family=Cantarell' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <style>
 
   body {
     background: #383A3F;
+    color: #FFFFF3;
+    font-size: 14px;
+    font-family: "Cantarell", sans-serif;
+    margin-left: 30px;
+    margin-top: 20px;
   }
   svg {
-    font: 14px sans-serif;
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
     fill: #FFFFF3;
   }
 
@@ -43,9 +51,13 @@
   <script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
+<h1>World University Rankings</h1>
+<h3>This parallel coordinates chart shows the data of the top 20 universities for the years 2011-2016. </br>
+    Drag on an axis to begin a brush. Click the axis to remove the brush. </br>
+    Drag around axis names to reorder them.</h3>
   <script>
 
-  var w = 1200, h = 500;
+  var w = 1100, h = 400;
   var margin = {top: 30, right: 100, bottom: 10, left: 10},
       width = w - margin.left - margin.right,
       height = h - margin.top - margin.bottom;
@@ -75,7 +87,7 @@
 
     // Extract the list of dimensions and create a scale for each.
     x.domain(dimensions = d3.keys(rankings[0]).filter(function(d) {
-      if (d == "World Rank") {
+      if (d == "World Rank" || d == "Year") {
         return d != "name" && (y[d] = d3.scale.linear()
           .domain(d3.extent(rankings, function(p) { return +p[d]; }))
           .range([0, height]));
@@ -196,12 +208,23 @@
         hide[i] = !hide[i];
         if (hide[i]) {
           d3.select(this)
-            .style("opacity", 0.2);
-          foreground.attr("opacity", 0.1);
+            .transition()
+            .style("opacity", 0.2)
+            .duration(800);
+          foreground.transition()
+              .filter(function(d) { console.log(d); return d.Country == countries[i]; })
+              .duration(800)
+              .attr("opacity", 0.1);
         }
         else {
-          d3.select(this).style("opacity", 1);
-          foreground.attr("opacity", 1);
+          d3.select(this)
+            .transition()
+            .style("opacity", 1)
+            .duration(800);
+          foreground.transition()
+              .filter(function(d) { console.log(d); return d.Country == countries[i]; })
+              .duration(800)
+              .attr("opacity", 0.85);
         }
       });
 
