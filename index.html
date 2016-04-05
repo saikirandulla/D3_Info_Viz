@@ -32,16 +32,28 @@
     shape-rendering: crispEdges;
   }
 
+  div.tooltip {   
+    position: absolute;           
+    text-align: left;           
+    width: 120px;                  
+    height: 65px;                 
+    padding: 5px;             
+    font-size: 10px;
+    font-family: 'Open Sans', sans-serif;        
+    background: #8b8687;   
+    border: 1px;      
+    border-radius: 8px;           
+    pointer-events: none;         
+  }
+
   .axis line,
   .axis path {
     fill: none;
-    stroke: #000;
+    stroke: #8b8687;
     shape-rendering: crispEdges;
   }
 
   .axis text {
-    /*text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;*/
-    
     shape-rendering: crispEdges;
     fill: #FFFFF3;
     cursor: move;
@@ -52,7 +64,7 @@
 </head>
 <body>
 <h1>World University Rankings</h1>
-<h3>This parallel coordinates chart shows the data of the top 20 universities for the years 2011-2016. </br>
+<h3>This parallel coordinates chart shows the data of the top 30 universities for the years 2011-2016. </br>
     Drag on an axis to begin a brush. Click the axis to remove the brush. </br>
     Drag around axis names to reorder them.</h3>
   <script>
@@ -83,16 +95,21 @@
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  d3.csv("timesDataParallel.csv", function(error, rankings) {
+      //Create tooltip
+  var parTooltip = d3.select("body").append("div")   
+    .attr("class", "tooltip")               
+    .style("opacity", 0);
+
+  d3.csv("timesDataPar.csv", function(error, rankings) {
 
     // Extract the list of dimensions and create a scale for each.
     x.domain(dimensions = d3.keys(rankings[0]).filter(function(d) {
-      if (d == "World Rank" || d == "Year") {
+      if (d == "Rank" || d == "Year") {
         return d != "name" && (y[d] = d3.scale.linear()
           .domain(d3.extent(rankings, function(p) { return +p[d]; }))
           .range([0, height]));
       }
-      else if (d =="Country") {
+      else if (d =="Country" || d == "University") {
         return;
       }
       else return d != "name" && (y[d] = d3.scale.linear()
@@ -116,8 +133,22 @@
       .attr("d", path).attr("stroke",function (d) {
         return color_hash[d.Country];
       })
+      .attr("stroke-width",1.5)
       .attr("fill","none")
-      .attr("opacity", 0.85);
+      .attr("opacity", 0.8)
+      .on("mouseover", function(d) {      
+            parTooltip.transition()        
+                .duration(200)      
+                .style("opacity", .9);      
+            parTooltip.html("<strong>Name</strong>: "+d.University + "<br/><strong>Country</strong>: "+ d.Country + "<br/><strong>Rank</strong>: "+ d.Rank)  
+                .style("left", (d3.event.pageX) + "px")     
+                .style("top", (d3.event.pageY) + "px");    
+            })                  
+        .on("mouseout", function(d) {       
+            parTooltip.transition()        
+                .duration(500)      
+                .style("opacity", 0);   
+        });
 
     // Add a group element for each dimension.
     var g = svg.selectAll(".dimension")
@@ -182,7 +213,7 @@
     .style("font-size","12px");
     
   svg.selectAll("text")
-    .data(["Click legend to", "hide/show countries:"])
+    .data(["Click legend square to", "hide/show countries:"])
     .enter()
     .append("text")
     .attr("x",w-150)
@@ -209,7 +240,7 @@
         if (hide[i]) {
           d3.select(this)
             .transition()
-            .style("opacity", 0.2)
+            .style("opacity", 0.1)
             .duration(800);
           foreground.transition()
               .filter(function(d) { console.log(d); return d.Country == countries[i]; })
@@ -224,7 +255,7 @@
           foreground.transition()
               .filter(function(d) { console.log(d); return d.Country == countries[i]; })
               .duration(800)
-              .attr("opacity", 0.85);
+              .attr("opacity", 0.8);
         }
       });
 
@@ -266,6 +297,7 @@
       }) ? null : "none";
     });
   }
+
 
   </script>
 </body>
