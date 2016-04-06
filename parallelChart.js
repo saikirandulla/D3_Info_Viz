@@ -142,7 +142,7 @@ var legend = svg.append("g")
   .style("font-size","12px");
 
 svg.selectAll("text")
-  .data(["Click legend square to", "hide/show countries:"])
+  .data(["Click legend squares to", "hide/show countries:"])
   .enter()
   .append("text")
   .attr("x",w-150)
