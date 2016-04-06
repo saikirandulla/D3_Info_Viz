@@ -1,0 +1,161 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  /*padding-top: 10px;
+  padding-bottom: 100px;*/
+}
+html {
+  overflow-y: scroll;
+}
+h1 {
+  color: white;
+  font-weight: 800;
+
+}
+h2 {
+  color: gray;
+  padding-bottom: 10px;
+}
+
+#header1 {
+  color: black;
+  font-weight: 800;
+}
+#header2 {
+  color: black;
+  font-weight: 800;
+  font-size: 1.5em;
+}
+h3 {
+  color: gray;
+  font-size: 1.2em;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+footer a,
+footer a:hover, footer a:visited {
+  color: #D2A000;
+}
+.text-small {
+  font-size: 12px;
+  font-style: italic;
+}
+footer {
+  color: white;
+  padding-top: 5px;
+  border-top: 1px solid gray;
+  font-size: 12px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  background: black;
+  text-align: center;
+}
+
+header {
+  color: white;
+  padding-top: 5px;
+  border-top: 1px solid gray;
+  font-size: 12px;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  background: black;
+  text-align: center;
+}
+
+pre {
+  height: 200px;
+  font-size: 9px;
+  overflow-y: scroll;
+}
+.form-control-inline {
+  display: inline;
+  width: 40px;
+  margin-right: 5px;
+}
+.visualization {
+}
+.configuration {
+  font-size: 0.8em;
+  width: 250px;
+  border: 1px solid #ddd;
+  padding-left: 20px;
+  margin-bottom: 20px;
+  top : 0;
+}
+.checkbox {
+  margin-left: 20px;
+  margin-bottom: 20px;
+
+}
+
+
+/*parallel charts*/
+
+#parallelGraph {
+  background: #383A3F;
+  color: #FFFFF3;
+  font-size: 14px;
+  font-family: "Cantarell", sans-serif;
+  /*margin-left: 30px;
+  margin-top: 20px;*/
+}
+
+.darkSection {
+  background: #383A3F;
+  color: #FFFFF3;
+  font-size: 14px;
+  font-family: "Cantarell", sans-serif;
+  margin-bottom: 30px;
+  /*margin-left: 30px;
+  margin-top: 20px;*/
+}
+svg {
+  font-size: 14px;
+  font-family: 'Open Sans', sans-serif;
+  fill: #FFFFF3;
+}
+
+.background path {
+  fill: none;
+  stroke: none;
+  shape-rendering: crispEdges;
+}
+
+.brush .extent {
+  fill-opacity: .3;
+  stroke: #fff;
+  shape-rendering: crispEdges;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: left;
+  width: 120px;
+  height: 65px;
+  padding: 5px;
+  font-size: 10px;
+  font-family: 'Open Sans', sans-serif;
+  background: #8b8687;
+  border: 1px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.axis line,
+.axis path {
+  fill: none;
+  stroke: #8b8687;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  shape-rendering: crispEdges;
+  fill: #FFFFF3;
+  cursor: move;
+}
